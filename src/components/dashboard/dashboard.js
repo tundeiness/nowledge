@@ -5,7 +5,20 @@ import './dashboard.css';
 
 
 class Dashboard extends React.Component {
+  state= {showForm: false}
 
+  showForm = () => {
+     return (
+       <div> 
+        <form>
+              <div className="px-md-5 form-group">
+                <h6>Questions:</h6>
+                <input type="text" id="firstName" className="form-control input-shadow" placeholder="Enter questions"  name="firstName" />
+              </div>
+            </form>
+        </div>
+       );
+   }
   render() {
 
     return (
@@ -38,13 +51,18 @@ class Dashboard extends React.Component {
               <p>curriculum-based materials,</p>
               <p>interactive study methods and games.</p>
             <div className="row mx-md-n5">
-              <div className="col px-md-5"><button class="p-3 border bg-light">I'm a teacher</button></div>
+              <div className="col px-md-5"><button class="p-3 border bg-light" onClick={() => this.setState({showForm: true}) }>I'm a teacher</button></div>
               <div className="col px-md-5"><button class="p-3 border bg-light">I'm a student</button></div>
             </div>
             </div>
             <div className="p-2 flex-shrink-1 bd-highlight">
               <img className="img-responsive" src="https://images.prismic.io/quizlet-prod/e5f22f21-7f67-4f29-aac0-8cf0b3fa048a_classroom.png?auto=compress,format" alt=""/>
             </div>
+          </div>
+          <hr />
+          <br />
+          <div className="img thumbnail">
+            {this.state.showForm ? this.showForm() : null}
           </div>
         </main>
 
