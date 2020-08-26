@@ -12,6 +12,20 @@ class Dashboard extends React.Component {
 
   postQuizName = () => {
     // post the name gotten from the input to the API
+
+      const url = "/api/v1/quiz";
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error("Network response was not ok.");
+        })
+        .then(
+          // response => getDbCocktails(response.data)
+        )
+        .catch(error => error);
+
   }
 
   showDiv = () => {
@@ -22,7 +36,7 @@ class Dashboard extends React.Component {
 
   showForm = () => {
      return (
-       <div> 
+       <div>
         <form>
           <div className="px-md-5 form-group">
             <h6>Create Quiz:</h6>
