@@ -5,19 +5,21 @@ import './dashboard.css';
 
 
 class Dashboard extends React.Component {
-  state= {showForm: false}
+  state= {showForm: true}
 
   showForm = () => {
      return (
        <div> 
         <form>
-              <div className="px-md-5 form-group">
-                <h6>Questions:</h6>
-                <input type="text" id="firstName" className="form-control input-shadow" placeholder="Enter questions"  name="firstName" />
-              </div>
-            </form>
+          <div className="px-md-5 form-group">
+            <h6>Create Quiz:</h6>
+            <input type="text" id="quizname" className="form-control" placeholder="Quiz Name" />
+             <br/>
+            <button onClick={() => this.setState({showForm: false}) }>Create</button>
+          </div>
+          </form>
         </div>
-       );
+      );
    }
   render() {
 
@@ -63,6 +65,7 @@ class Dashboard extends React.Component {
           <br />
           <div className="img thumbnail">
             {this.state.showForm ? this.showForm() : null}
+          <hr />
           </div>
         </main>
 
