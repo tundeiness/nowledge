@@ -5,7 +5,20 @@ import './dashboard.css';
 
 
 class Dashboard extends React.Component {
-  state= {showForm: true}
+  state = {
+    showForm: false,
+    showDiv: false
+  };
+
+  postQuizName = () => {
+    // post the name gotten from the input to the API
+  }
+
+  showDiv = () => {
+    return (
+      <div>Quiz Created</div>
+    );
+  }
 
   showForm = () => {
      return (
@@ -15,7 +28,7 @@ class Dashboard extends React.Component {
             <h6>Create Quiz:</h6>
             <input type="text" id="quizname" className="form-control" placeholder="Quiz Name" />
              <br/>
-            <button onClick={() => this.setState({showForm: false}) }>Create</button>
+            <button onClick={() => this.setState({showForm: false, showDiv: true}) && this.postQuizName()}>Create</button>
           </div>
           </form>
         </div>
@@ -65,6 +78,7 @@ class Dashboard extends React.Component {
           <br />
           <div className="img thumbnail">
             {this.state.showForm ? this.showForm() : null}
+            {this.state.showDiv ? this.showDiv() : null}
           <hr />
           </div>
         </main>
