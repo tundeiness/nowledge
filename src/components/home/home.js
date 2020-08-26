@@ -11,6 +11,7 @@ class Home extends Component {
         <button className="btn btn-primary" onClick={this.getHome} type="button">Home</button>
         <Link className="dropdown-item" to="/login">Logout</Link>
         <Link to="/register" className="btn btn-link">Register</Link>
+        <Link to="/dashboard" className="btn btn-link">Dashboard</Link>
       </div>
     );
   }
