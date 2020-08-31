@@ -2,16 +2,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './dashboard.css';
-
+import axios from 'axios'
 
 class Dashboard extends React.Component {
   state = {
     showForm: false,
-    showDiv: false
+    showDiv: false,
+    quizName: '',
   };
 
-  postQuizName = () => {
-    // post the name gotten from the input to the API
+  handleChange = e => {
+    this.setState({
+      quizName: e.target.value,
+    });
+  };
+  
+  postQuizName = async () => {
+    axios.post('https://serene-mountain-66508.herokuapp.com/api/v1/quizzes', {title: this.state.quizName})
+  }
+  
+  handleSubmit = () => {
+    this.setState({showForm: false, showDiv: true})
+    this.showDiv()
+    this.postQuizName()
+    
   }
 
   showDiv = () => {
@@ -21,15 +35,21 @@ class Dashboard extends React.Component {
   }
 
   showForm = () => {
+    const { quizName } = this.state;
      return (
-       <div> 
-        <form>
-          <div className="px-md-5 form-group">
+        <div className="px-md-5 form-group">
+          <form onSubmit={this.handleSubmit}>
             <h6>Create Quiz:</h6>
-            <input type="text" id="quizname" className="form-control" placeholder="Quiz Name" />
-             <br/>
-            <button onClick={() => this.setState({showForm: false, showDiv: true}) && this.postQuizName()}>Create</button>
-          </div>
+            <input 
+              type="text"  
+              className="form-control" 
+              placeholder="Quiz Name" 
+              name="quizName"
+              value={quizName}
+              onChange={this.handleChange}
+            />
+            <br/>
+            <button type="submit">Create</button>
           </form>
         </div>
       );
@@ -40,12 +60,12 @@ class Dashboard extends React.Component {
       <div>
         <nav className="navbar navbar-expand-md navbar-light bg-light">
           <Link to="/register" className="btn btn-link white"><h2>NowLedge</h2></Link>
-          <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-              <span class="navbar-toggler-icon"></span>
+          <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+              <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-              <div class="navbar-nav">
+          <div className="collapse navbar-collapse" id="navbarCollapse">
+              <div className="navbar-nav">
                   <Link to="/" className="nav-item nav-link active">Home</Link>
               </div>
               <div class="navbar-nav ml-auto">
@@ -57,8 +77,8 @@ class Dashboard extends React.Component {
         <br />
 
         <main className="px-md-5">
-          <div class="d-flex bd-highlight">
-            <div class="p-2 w-50 bd-highlight">
+          <div className="d-flex bd-highlight">
+            <div className="p-2 w-50 bd-highlight">
               <h2>Take your students'</h2>
               <h2>success to the next level</h2>
               <p>NowLedge helps teachers engage</p>
