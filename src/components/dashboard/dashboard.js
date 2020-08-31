@@ -2,46 +2,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './dashboard.css';
-
+import axios from 'axios'
 
 class Dashboard extends React.Component {
   state = {
     showForm: false,
     showDiv: false,
-    name: '',
+    quizName: '',
   };
 
-  getInput = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    console.log(value)
+  handleChange = e => {
     this.setState({
-      [name]: value
+      quizName: e.target.value,
     });
+  };
+
+  postQuizName = async () => {
+    axios.post('https://serene-mountain-66508.herokuapp.com/api/v1/quizzes', {title: this.state.quizName})
   }
 
-  postQuizName = (quiz) => {
-    // post the name gotten from the input to the API
-
-    const URL = "https://serene-mountain-66508.herokuapp.com/api/v1/quizzes";
-
-    const token = document.querySelector('meta[name="csrf-token"]').content;
-    fetch(URL, {
-      method: "POST",
-      headers: {
-        "X-CSRF-Token": token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({quiz: { Title: quiz }})
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('This Quiz exist in your list, choose another one');
-      })
-      // .then(()=> data)
-      .catch(error =>  error );
+  handleSubmit = () => {
+    this.setState({showForm: false, showDiv: true})
+    this.showDiv()
+    this.postQuizName()
 
   }
 
@@ -52,17 +35,21 @@ class Dashboard extends React.Component {
   }
 
   showForm = () => {
-    const {name} = this.state
-
+    const { quizName } = this.state;
      return (
-       <div>
-        <form>
-          <div className="px-md-5 form-group">
+        <div className="px-md-5 form-group">
+          <form onSubmit={this.handleSubmit}>
             <h6>Create Quiz:</h6>
-            <input type="text" id="quizname" name='name' value ={name} className="form-control" placeholder="Quiz Name" onChange={(e)=> this.getInput(e)} />
-             <br/>
-            <button onClick={() => this.setState({showForm: false, showDiv: true}) && this.postQuizName(name)}>Create</button>
-          </div>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Quiz Name"
+              name="quizName"
+              value={quizName}
+              onChange={this.handleChange}
+            />
+            <br/>
+            <button type="submit">Create</button>
           </form>
         </div>
       );
