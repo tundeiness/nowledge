@@ -57,6 +57,7 @@ class Login extends React.Component {
                 </div>
                 
                 <button type="button" onClick={this.submitLogin} className="btn btn-primary btn-block">Sign In</button>
+                {/* dashboard should open after successful login or register */}
                 <Link to="/register" className="btn btn-link">Register</Link>
               </form>
           </div>
