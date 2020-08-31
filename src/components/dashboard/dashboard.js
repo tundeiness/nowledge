@@ -25,7 +25,6 @@ class Dashboard extends React.Component {
     this.setState({showForm: false, showDiv: true})
     this.showDiv()
     this.postQuizName()
-    
   }
 
   showDiv = () => {
@@ -55,7 +54,6 @@ class Dashboard extends React.Component {
       );
    }
   render() {
-
     return (
       <div>
         <nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -68,7 +66,7 @@ class Dashboard extends React.Component {
               <div className="navbar-nav">
                   <Link to="/" className="nav-item nav-link active">Home</Link>
               </div>
-              <div class="navbar-nav ml-auto">
+              <div className="navbar-nav ml-auto">
                   <Link to="/login" className="nav-item nav-link">Login</Link>
                   <Link to="/register" className="nav-item nav-link">Register</Link>
               </div>
@@ -86,8 +84,8 @@ class Dashboard extends React.Component {
               <p>curriculum-based materials,</p>
               <p>interactive study methods and games.</p>
             <div className="row mx-md-n5">
-              <div className="col px-md-5"><button class="p-3 border bg-light" onClick={() => this.setState({showForm: true}) }>I'm a teacher</button></div>
-              <div className="col px-md-5"><button class="p-3 border bg-light">I'm a student</button></div>
+              <div className="col px-md-5"><button className="p-3 border bg-light" onClick={() => this.setState({showForm: true}) }>I'm a teacher</button></div>
+              <div className="col px-md-5"><button className="p-3 border bg-light">I'm a student</button></div>
             </div>
             </div>
             <div className="p-2 flex-shrink-1 bd-highlight">
