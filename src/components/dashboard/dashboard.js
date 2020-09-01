@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './dashboard.css';
-import axios from 'axios'
+import axios from 'axios';
 
 class Dashboard extends React.Component {
   state = {
