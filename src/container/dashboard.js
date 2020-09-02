@@ -1,21 +1,35 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './dashboard.css';
 import axios from 'axios'
+import { connect } from 'react-redux'
+import { fetchTitles } from '../action/index'
+import './dashboard.css';
 
 class Dashboard extends React.Component {
   state = {
     showForm: false,
     showDiv: false,
     quizName: '',
+    titles: [],
   };
 
-  handleChange = e => {
-    this.setState({
-      quizName: e.target.value,
-    });
-  };
+  async componentDidMount() {
+    await axios
+      .get('https://serene-mountain-66508.herokuapp.com/api/v1/quizzes')
+      .then(res => {
+        const titles = res.data;
+        this.setState({ titles });
+      })
+      .catch(error => console.log(error));
+  
+    const { titles } = this.state;
+    const { fetchTitles } = this.props;
+  
+    fetchTitles(titles);
+    console.log(titles)
+  }
+
   
   postQuizName = async () => {
     axios.post('https://serene-mountain-66508.herokuapp.com/api/v1/quizzes', {title: this.state.quizName})
@@ -27,6 +41,12 @@ class Dashboard extends React.Component {
     this.postQuizName()
     
   }
+  
+  handleChange = e => {
+    this.setState({
+      quizName: e.target.value,
+    });
+  };
 
   showDiv = () => {
     return (
@@ -68,7 +88,7 @@ class Dashboard extends React.Component {
               <div className="navbar-nav">
                   <Link to="/" className="nav-item nav-link active">Home</Link>
               </div>
-              <div class="navbar-nav ml-auto">
+              <div className="navbar-nav ml-auto">
                   <Link to="/login" className="nav-item nav-link">Login</Link>
                   <Link to="/register" className="nav-item nav-link">Register</Link>
               </div>
@@ -86,8 +106,8 @@ class Dashboard extends React.Component {
               <p>curriculum-based materials,</p>
               <p>interactive study methods and games.</p>
             <div className="row mx-md-n5">
-              <div className="col px-md-5"><button class="p-3 border bg-light" onClick={() => this.setState({showForm: true}) }>I'm a teacher</button></div>
-              <div className="col px-md-5"><button class="p-3 border bg-light">I'm a student</button></div>
+              <div className="col px-md-5"><button className="p-3 border bg-light" onClick={() => this.setState({showForm: true}) }>I'm a teacher</button></div>
+              <div className="col px-md-5"><button className="p-3 border bg-light">I'm a student</button></div>
             </div>
             </div>
             <div className="p-2 flex-shrink-1 bd-highlight">
@@ -108,4 +128,8 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+const mapDispatchToProps = dispatch => ({
+  fetchTitles: titles => dispatch(fetchTitles(titles)),
+});
+
+export default connect(null, mapDispatchToProps)(Dashboard);

@@ -1,6 +1,9 @@
-const createQuiz = title => ({
+export const createQuiz = title => ({
   type: 'CREATE_QUIZ',
   payload: title,
 });
 
-export default createQuiz;
+export const fetchTitles = titles => ({
+  type: 'FETCH_DOCTOR',
+  titles,
+});
